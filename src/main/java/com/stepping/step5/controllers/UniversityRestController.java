@@ -3,11 +3,8 @@ package com.stepping.step5.controllers;
 import com.stepping.step5.entity.models.University;
 import com.stepping.step5.entity.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/university")
@@ -16,14 +13,35 @@ public class UniversityRestController {
     @Autowired
     private UniversityRepository universityRepository;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<University>> getAllUniversities(){
-        return new ResponseEntity<>((Collection<University>) universityRepository.findAll(), HttpStatus.OK);
+    @RequestMapping("/")
+    @ResponseBody
+    public String getAllUniversities(){
+        ArrayList<University> collection = new ArrayList<>();
+        try{
+        collection.addAll(universityRepository.findAll());
+        }catch (Exception ex){
+            return "can't get list with universities: " + ex.toString();
+        }
+        String res = "";
+        if (collection.size()!= 0){
+            for (University university : collection) {
+                res += university.toString();
+            }
+            return res;
+        }else return "There is no university!";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ResponseEntity<University> getUniversityWithId(@PathVariable int id){
-        return new ResponseEntity<>(universityRepository.findOne(id), HttpStatus.OK);
+    @RequestMapping("/get")
+    @ResponseBody
+    public String getUniversityWithId(int id){
+        University university;
+        try {
+            university = universityRepository.findOne(id);
+        }catch (Exception ex){
+            return "Can't find university: " + ex.toString();
+        }
+        return university.toString();
+
     }
 
     @RequestMapping("/create")
@@ -49,18 +67,5 @@ public class UniversityRestController {
         }
         return "University succesfully deleted!";
     }
-
-    /*@RequestMapping("/get")
-    @ResponseBody
-    public String getUniversity(String name){
-        String univerId="";
-        try {
-            University university = universityRepository.findByName(name);
-            univerId = String.valueOf(university.getUniverId());
-        }catch (Exception ex){
-            return "University not found";
-        }
-        return "University id is: " + univerId;
-    }*/
 
 }

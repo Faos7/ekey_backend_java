@@ -3,11 +3,8 @@ package com.stepping.step5.controllers;
 import com.stepping.step5.entity.models.Course;
 import com.stepping.step5.entity.repository.CoursesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
+import java.util.ArrayList;
 
 
 @RestController
@@ -17,15 +14,37 @@ public class CourseRestController {
     @Autowired
     private CoursesRepository coursesRepository;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<Course>> getAllCourses(){
-        return new ResponseEntity<>((Collection<Course>) coursesRepository.findAll(), HttpStatus.OK);
+    @RequestMapping("/")
+    @ResponseBody
+    public String getAllCourses(){
+        ArrayList<Course> collection = new ArrayList<>();
+        try{
+            collection.addAll(coursesRepository.findAll());
+        }catch (Exception ex){
+            return "can't get list with courses: " + ex.toString();
+        }
+        String res = "";
+        if (collection.size()!= 0){
+            for (Course course : collection) {
+                res += course.toString();
+            }
+            return res;
+        }else return "There is no course!";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ResponseEntity<Course> getCourseWithId(@PathVariable int id){
-        return new ResponseEntity<>(coursesRepository.findOne(id), HttpStatus.OK);
+    @RequestMapping("/get")
+    @ResponseBody
+    public String getCourseWithId(int id){
+        Course course;
+        try {
+            course = coursesRepository.findOne(id);
+        }catch (Exception ex){
+            return "Can't find course: " + ex.toString();
+        }
+        return course.toString();
+
     }
+
 
     @RequestMapping("/create")
     @ResponseBody

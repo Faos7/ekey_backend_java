@@ -25,6 +25,28 @@ public class Library implements Serializable{
     @OneToMany(mappedBy = "library")
     private List<Book> books;
 
+    public void deleteLibrarian(Librarian librarian){librarien.remove(librarian);}
+
+    public void addLibrarian(Librarian librarian){
+        librarien.add(librarian);
+    }
+
+    public void deleteBook(Book book){
+        books.remove(book);
+    }
+
+    public void addBook(Book book){
+        books.add(book);
+    }
+
+    public int getNumberOfLibrarians(){
+        return librarien.size();
+    }
+
+    public int getNumberOfBooks(){
+        return books.size();
+    }
+
     public List<Book> getBooks() {
         return books;
     }
@@ -68,7 +90,9 @@ public class Library implements Serializable{
     @Override
     public String toString() {
         return "Library{" + "libraryId=" + libraryId +
-                ", university=" + university.getUniverName() + '}';
+                ", university=" + university.getUniverName() +
+                ", number of librarians=" + getNumberOfLibrarians() +
+                ", number of books=" + getNumberOfBooks() +'}';
     }
 }
 

@@ -40,6 +40,18 @@ public class Student implements Serializable{
     @OneToMany(mappedBy = "student")
     private List<Book> books;
 
+    public void deleteBook(Book book){
+        books.remove(book);
+    }
+
+    public int getNumberOfBooks(){
+        return books.size();
+    }
+
+    public void addBook(Book book){
+        books.add(book);
+    }
+
     public void setBooks(List<Book> books) {
         this.books = books;
     }
@@ -136,6 +148,7 @@ public class Student implements Serializable{
                 ", poBatkovy=" + poBatkovy +
                 ", username=" + username +
                 ", password=" + password +
-                ", phoneNumber=" + phoneNumb +'}';
+                ", phoneNumber=" + phoneNumb +
+                ", number of books=" + getNumberOfBooks() +'}';
     }
 }

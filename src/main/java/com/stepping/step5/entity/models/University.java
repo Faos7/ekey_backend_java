@@ -44,6 +44,14 @@ public class University implements Serializable{
         return libraries;
     }
 
+    public void addGroup(Group group){
+        groups.add(group);
+    }
+
+    public void deleteGroup(Group group){
+        groups.remove(group);
+    }
+
     public void addLibrary(Library library){
         libraries.add(library);
     }
@@ -56,7 +64,7 @@ public class University implements Serializable{
         this.libraries = libraries;
     }
 
-    public Integer getUniverId() {
+    public int getUniverId() {
         return univerId;
     }
 
@@ -80,8 +88,19 @@ public class University implements Serializable{
         this.groups = groups;
     }
 
+    public int getNumbOfLibraries(){
+        return libraries.size();
+    }
+
+    public int getNumberOfGroups(){
+        return groups.size();
+    }
+
     @Override
     public String toString() {
-        return "Univercity{" + "univerId=" + univerId + ", univerName=" + univerName + '}';
+        return "Univercity{" + "univerId=" + univerId +
+                ", univerName=" + univerName +
+                ", number of libraries=" + getNumbOfLibraries() +
+                ", number of courses=" + getNumbOfLibraries() + '}';
     }
 }

@@ -26,10 +26,20 @@ public class Group implements Serializable{
     @JoinColumn(name = "Id_course")
     private Course course;
 
-
-
     @OneToMany(mappedBy = "group")
     private List<Student> students;
+
+    public int getNumberOfStudents(){
+        return students.size();
+    }
+
+    public void addStudent(Student student){
+        students.add(student);
+    }
+
+    public void deleteStudent(Student student){
+        students.remove(student);
+    }
 
     public List<Student> getStudents() {
         return students;
@@ -85,6 +95,7 @@ public class Group implements Serializable{
         return "Group{" + "groupId=" + groupId +
                 ", university=" + university.getUniverName() +
                 ", course" + course.getCourseNumb() +
-                ", groupName " + groupName + '}';
+                ", groupName " + groupName +
+                ", number of students=" + getNumberOfStudents() +'}';
     }
 }

@@ -32,6 +32,18 @@ public class Course implements Serializable{
         this.groups = groups;
     }
 
+    public void addGroup(Group group){
+        groups.add(group);
+    }
+
+    public void deleteGroup(Group group){
+        groups.remove(group);
+    }
+
+    public int getNumderOfGroups(){
+        return groups.size();
+    }
+
     public List<Group> getGroups() {
         return groups;
     }
@@ -58,6 +70,8 @@ public class Course implements Serializable{
 
     @Override
     public String toString() {
-        return "Course{" + "courseId=" + courseId + ", courseNumb=" + courseNumb + '}';
+        return "Course{" + "courseId=" + courseId +
+                ", courseNumb=" + courseNumb +
+                ", number of groups=" + getNumderOfGroups() +'}';
     }
 }

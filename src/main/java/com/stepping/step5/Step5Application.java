@@ -1,8 +1,5 @@
 package com.stepping.step5;
 
-
-import com.stepping.step5.entity.models.University;
-import com.stepping.step5.service.impl.UniversityServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

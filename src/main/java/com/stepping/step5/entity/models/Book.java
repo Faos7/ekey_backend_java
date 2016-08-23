@@ -23,8 +23,7 @@ public class Book implements Serializable{
     private String authorName;
 
     @Column(name = "Publ_year")
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    private DateTime publYear;
+    private int publYear;
 
     @ManyToOne
     @JoinColumn(name = "Id_library")
@@ -54,7 +53,7 @@ public class Book implements Serializable{
         return dateFrom;
     }
 
-    public DateTime getPublYear() {
+    public int getPublYear() {
         return publYear;
     }
 
@@ -98,7 +97,7 @@ public class Book implements Serializable{
         this.dateFrom = dateFrom;
     }
 
-    public void setPublYear(DateTime publYear) {
+    public void setPublYear(int publYear) {
         this.publYear = publYear;
     }
 
@@ -121,7 +120,7 @@ public class Book implements Serializable{
     public Book(){}
 
     public Book(String bookName, String authorName,
-                DateTime publYear, Library library, Boolean onlyHere,
+                int publYear, Library library, Boolean onlyHere,
                 Student student, DateTime dateFrom, DateTime dateTo){
         this.bookName = bookName;
         this.authorName = authorName;

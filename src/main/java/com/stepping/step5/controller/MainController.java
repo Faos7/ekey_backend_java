@@ -1,4 +1,4 @@
-package com.stepping.step5.controllers;
+package com.stepping.step5.controller;
 
 
 import org.springframework.stereotype.Controller;

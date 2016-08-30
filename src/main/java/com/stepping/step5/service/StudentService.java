@@ -1,19 +1,14 @@
-package com.stepping.step5.controllers;
+package com.stepping.step5.service;
 
 import com.stepping.step5.entity.models.Group;
 import com.stepping.step5.entity.models.Student;
 import com.stepping.step5.entity.repository.GroupsRepository;
 import com.stepping.step5.entity.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-@RestController
-@RequestMapping("/student")
-public class StudentRestController {
+public class StudentService {
 
     @Autowired
     StudentRepository studentRepository;
@@ -21,9 +16,7 @@ public class StudentRestController {
     @Autowired
     GroupsRepository groupsRepository;
 
-    @RequestMapping("/")
-    @ResponseBody
-    public String getAllStudents(){
+    /*public String getAllStudents(){
         ArrayList<Student> collection = new ArrayList<>();
         try{
             collection.addAll(studentRepository.findAll());
@@ -39,8 +32,6 @@ public class StudentRestController {
         }else return "There is no student!";
     }
 
-    @RequestMapping("/get")
-    @ResponseBody
     public String getStudentWithId(int id){
         Student student;
         try {
@@ -52,8 +43,6 @@ public class StudentRestController {
 
     }
 
-    @RequestMapping("/create")
-    @ResponseBody
     public String createStudent(String name1, String name2, String name3,
                                 String username, String password, int id, long phone){
         try{
@@ -75,8 +64,6 @@ public class StudentRestController {
         return "Student succesfully created!";
     }
 
-    @RequestMapping("/delete")
-    @ResponseBody
     public String deleteStudent(int id){
         try{
             Student student =studentRepository.findOne(id);
@@ -91,8 +78,6 @@ public class StudentRestController {
         return "Student succesfully deleted!";
     }
 
-    @RequestMapping("/group")
-    @ResponseBody
     public String getAllGroupStudents(int id){
         ArrayList<Student> students = new ArrayList<>();
         try{
@@ -109,5 +94,5 @@ public class StudentRestController {
             return res;
         }else
             return "This group has no students!";
-    }
+    }*/
 }

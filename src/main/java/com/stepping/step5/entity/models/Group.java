@@ -1,7 +1,6 @@
 package com.stepping.step5.entity.models;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 
 
@@ -10,7 +9,7 @@ import javax.persistence.*;
 public class Group implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id_group", nullable = false)
     private Integer groupId;
 
@@ -18,36 +17,10 @@ public class Group implements Serializable{
     private String groupName;
 
     @ManyToOne
-    @JoinColumn(name = "Id_univer")
     private University university;
 
-
     @ManyToOne
-    @JoinColumn(name = "Id_course")
     private Course course;
-
-    @OneToMany(mappedBy = "group")
-    private List<Student> students;
-
-    public int getNumberOfStudents(){
-        return students.size();
-    }
-
-    public void addStudent(Student student){
-        students.add(student);
-    }
-
-    public void deleteStudent(Student student){
-        students.remove(student);
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
 
     public Integer getGroupId() {
         return groupId;
@@ -83,11 +56,8 @@ public class Group implements Serializable{
 
     public Group(){}
 
-    public Group(University university, Course course, String groupName, List<Student> students){
-        this.course = course;
+    public Group(String groupName){
         this.groupName = groupName;
-        this.university = university;
-        this.students = students;
     }
 
     @Override
@@ -95,7 +65,6 @@ public class Group implements Serializable{
         return "Group{" + "groupId=" + groupId +
                 ", university=" + university.getUniverName() +
                 ", course" + course.getCourseNumb() +
-                ", groupName " + groupName +
-                ", number of students=" + getNumberOfStudents() +'}';
+                ", groupName " + groupName +'}';
     }
 }

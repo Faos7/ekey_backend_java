@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Book implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id_book", nullable = false)
     private Integer bookId;
 
@@ -26,14 +26,12 @@ public class Book implements Serializable{
     private int publYear;
 
     @ManyToOne
-    @JoinColumn(name = "Id_library")
     private Library library;
 
     @Column(name = "OnlyHere")
     private Boolean onlyHere;
 
     @ManyToOne
-    @JoinColumn(name = "Id_owner")
     private Student student;
 
 
@@ -119,15 +117,13 @@ public class Book implements Serializable{
 
     public Book(){}
 
-    public Book(String bookName, String authorName,
-                int publYear, Library library, Boolean onlyHere,
-                Student student, DateTime dateFrom, DateTime dateTo){
+    public Book(int id, String bookName, String authorName,
+                int publYear, Boolean onlyHere,
+                DateTime dateFrom, DateTime dateTo){
         this.bookName = bookName;
         this.authorName = authorName;
         this.publYear = publYear;
-        this.library = library;
         this.onlyHere = onlyHere;
-        this.student = student;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
     }

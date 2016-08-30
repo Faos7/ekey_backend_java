@@ -1,13 +1,11 @@
 package com.stepping.step5.entity.models;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -15,41 +13,17 @@ import javax.persistence.Table;
 @Table(name = "courses")
 public class Course implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id_course")
     private Integer courseId;
 
     @Column(name = "Course_numb")
     private Integer courseNumb;
 
-    @OneToMany(mappedBy = "course")
-    private List<Group> groups;
-
     public Course(){}
 
-    public Course(Integer courseNumb, List<Group> groups){
+    public Course(Integer courseNumb){
         this.courseNumb = courseNumb;
-        this.groups = groups;
-    }
-
-    public void addGroup(Group group){
-        groups.add(group);
-    }
-
-    public void deleteGroup(Group group){
-        groups.remove(group);
-    }
-
-    public int getNumderOfGroups(){
-        return groups.size();
-    }
-
-    public List<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
     }
 
     public Integer getCourseId() {
@@ -71,7 +45,6 @@ public class Course implements Serializable{
     @Override
     public String toString() {
         return "Course{" + "courseId=" + courseId +
-                ", courseNumb=" + courseNumb +
-                ", number of groups=" + getNumderOfGroups() +'}';
+                ", courseNumb=" + courseNumb +'}';
     }
 }

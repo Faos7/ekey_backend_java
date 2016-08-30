@@ -1,4 +1,4 @@
-package com.stepping.step5.controllers;
+package com.stepping.step5.service;
 
 
 import com.stepping.step5.entity.models.Librarian;
@@ -6,15 +6,10 @@ import com.stepping.step5.entity.models.Library;
 import com.stepping.step5.entity.repository.LibrariansRepository;
 import com.stepping.step5.entity.repository.LibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-@RestController
-@RequestMapping("/librarian")
-public class LibrariansRestController {
+public class LibrarianService {
 
     @Autowired
     private LibraryRepository libraryRepository;
@@ -22,9 +17,7 @@ public class LibrariansRestController {
     @Autowired
     private LibrariansRepository librariansRepository;
 
-    @RequestMapping("/")
-    @ResponseBody
-    public String getAllLibrarians(){
+    /*public String getAllLibrarians(){
         ArrayList<Librarian> collection = new ArrayList<>();
         try{
             collection.addAll(librariansRepository.findAll());
@@ -40,8 +33,6 @@ public class LibrariansRestController {
         }else return "There is no librarian!";
     }
 
-    @RequestMapping("/library")
-    @ResponseBody
     public String getAllLibraryLibrarians(int id){
         ArrayList<Librarian> librarians = new ArrayList<>();
         try{
@@ -59,8 +50,6 @@ public class LibrariansRestController {
         }else return "This library has no librarians!";
     }
 
-    @RequestMapping("/get")
-    @ResponseBody
     public String getLibrarianWithId(int id){
         Librarian librarian;
         try {
@@ -72,8 +61,6 @@ public class LibrariansRestController {
 
     }
 
-    @RequestMapping("/create")
-    @ResponseBody
     public String createLibrarian(String name1, String name2, String name3, int id){
         try{
             Library library = libraryRepository.getOne(id);
@@ -90,8 +77,6 @@ public class LibrariansRestController {
         return "Librarian succesfully created!";
     }
 
-    @RequestMapping("/delete")
-    @ResponseBody
     public String deleteLibrarian(int id){
         try{
             Librarian librarian = librariansRepository.findOne(id);
@@ -103,5 +88,5 @@ public class LibrariansRestController {
         {return "Error deleting the university: " + ex.toString();
         }
         return "Library succesfully deleted!";
-    }
+    }*/
 }

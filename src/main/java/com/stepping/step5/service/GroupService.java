@@ -1,4 +1,4 @@
-package com.stepping.step5.controllers;
+package com.stepping.step5.service;
 
 import com.stepping.step5.entity.models.Course;
 import com.stepping.step5.entity.models.Group;
@@ -7,15 +7,10 @@ import com.stepping.step5.entity.repository.CoursesRepository;
 import com.stepping.step5.entity.repository.GroupsRepository;
 import com.stepping.step5.entity.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-@RestController
-@RequestMapping("/group")
-public class GroupRestController {
+public class GroupService {
 
     @Autowired
     CoursesRepository coursesRepository;
@@ -26,9 +21,7 @@ public class GroupRestController {
     @Autowired
     GroupsRepository groupsRepository;
 
-    @RequestMapping("/")
-    @ResponseBody
-    public String getAllGroups(){
+    /*public String getAllGroups(){
         ArrayList<Group> collection = new ArrayList<>();
         try{
             collection.addAll(groupsRepository.findAll());
@@ -44,8 +37,6 @@ public class GroupRestController {
         }else return "There is no group!";
     }
 
-    @RequestMapping("/get")
-    @ResponseBody
     public String getGroupWithId(int id){
         Group group;
         try {
@@ -57,8 +48,6 @@ public class GroupRestController {
 
     }
 
-    @RequestMapping("/create")
-    @ResponseBody
     public String createGroup(String name, int cId, int uId){
         try{
             University university = universityRepository.findOne(uId);
@@ -78,8 +67,6 @@ public class GroupRestController {
         return "Group succesfully created!";
     }
 
-    @RequestMapping("/delete")
-    @ResponseBody
     public String deleteGroup(int id){
         try{
             Group group = groupsRepository.findOne(id);
@@ -97,8 +84,6 @@ public class GroupRestController {
         return "Group succesfully deleted!";
     }
 
-    @RequestMapping("/university")
-    @ResponseBody
     public String getAllUniversityGroups(int id){
         ArrayList<Group> groups = new ArrayList<>();
         try{
@@ -117,8 +102,6 @@ public class GroupRestController {
             return "This University has no groups!";
     }
 
-    @RequestMapping("/course")
-    @ResponseBody
     public String getAllCourseGroups(int id){
         ArrayList<Group> groups = new ArrayList<>();
         try{
@@ -135,6 +118,6 @@ public class GroupRestController {
             return res;
         }else return "This course has no groups!";
 
-    }
+    }*/
 
 }

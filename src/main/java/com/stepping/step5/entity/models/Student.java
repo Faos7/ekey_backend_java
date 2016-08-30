@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Student implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id_student", nullable = false)
     private Integer studentId;
 
@@ -34,31 +34,7 @@ public class Student implements Serializable{
     private Long phoneNumb;
 
     @ManyToOne
-    @JoinColumn(name = "Id_group")
     private Group group;
-
-    @OneToMany(mappedBy = "student")
-    private List<Book> books;
-
-    public void deleteBook(Book book){
-        books.remove(book);
-    }
-
-    public int getNumberOfBooks(){
-        return books.size();
-    }
-
-    public void addBook(Book book){
-        books.add(book);
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
 
     public Integer getStudentId() {
         return studentId;
@@ -126,17 +102,14 @@ public class Student implements Serializable{
 
     public Student(){}
 
-    public Student(Group group, String firstName,
-                   String secondName, String poBatkovy, String username,
-                   String password, Long phoneNumb, List<Book> books){
-        this.group = group;
+    public Student(String firstName, String secondName, String poBatkovy,
+                   String username, String password, Long phoneNumb){
         this.firstName = firstName;
         this.secondName = secondName;
         this.poBatkovy = poBatkovy;
         this.username = username;
         this.password = password;
         this.phoneNumb = phoneNumb;
-        this.books = books;
     }
 
     @Override
@@ -148,7 +121,6 @@ public class Student implements Serializable{
                 ", poBatkovy=" + poBatkovy +
                 ", username=" + username +
                 ", password=" + password +
-                ", phoneNumber=" + phoneNumb +
-                ", number of books=" + getNumberOfBooks() +'}';
+                ", phoneNumber=" + phoneNumb +'}';
     }
 }

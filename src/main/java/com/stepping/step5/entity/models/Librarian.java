@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Librarian implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "Id_librarian", nullable = false)
     private Integer librarianId;
 
@@ -24,12 +24,14 @@ public class Librarian implements Serializable{
     private String poBatkyovy;
 
     @ManyToOne
+    @JoinColumn(name = "Id_library")
     private Library library;
 
     public Librarian(){}
 
-    public Librarian(String firstName, String secondName, String poBatkyovy){
+    public Librarian(Library library, String firstName, String secondName, String poBatkyovy){
         this.firstName = firstName;
+        this.library = library;
         this.poBatkyovy = poBatkyovy;
         this.secondName = secondName;
     }

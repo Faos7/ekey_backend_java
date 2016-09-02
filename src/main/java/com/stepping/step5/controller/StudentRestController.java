@@ -1,14 +1,19 @@
-package com.stepping.step5.service;
+package com.stepping.step5.controller;
 
 import com.stepping.step5.entity.models.Group;
 import com.stepping.step5.entity.models.Student;
 import com.stepping.step5.entity.repository.GroupsRepository;
 import com.stepping.step5.entity.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
-public class StudentService {
+@RestController
+@RequestMapping("/student")
+public class StudentRestController {
 
     @Autowired
     StudentRepository studentRepository;
@@ -16,33 +21,18 @@ public class StudentService {
     @Autowired
     GroupsRepository groupsRepository;
 
-    /*public String getAllStudents(){
-        ArrayList<Student> collection = new ArrayList<>();
-        try{
-            collection.addAll(studentRepository.findAll());
-        }catch (Exception ex){
-            return "can't get list with students: " + ex.toString();
-        }
-        String res = "";
-        if (collection.size()!= 0){
-            for (Student student : collection) {
-                res += student.toString();
-            }
-            return res;
-        }else return "There is no student!";
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Collection<Student>> getAllStudents(){
+        return new ResponseEntity<>((Collection<Student>) studentRepository.findAll(), HttpStatus.OK);
     }
 
-    public String getStudentWithId(int id){
-        Student student;
-        try {
-            student = studentRepository.findOne(id);
-        }catch (Exception ex){
-            return "Can't find student: " + ex.toString();
-        }
-        return student.toString();
-
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ResponseEntity<Student> getStudentWithId(@PathVariable int id){
+        return new ResponseEntity<>(studentRepository.findOne(id), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
     public String createStudent(String name1, String name2, String name3,
                                 String username, String password, int id, long phone){
         try{
@@ -64,6 +54,8 @@ public class StudentService {
         return "Student succesfully created!";
     }
 
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ResponseBody
     public String deleteStudent(int id){
         try{
             Student student =studentRepository.findOne(id);
@@ -78,6 +70,8 @@ public class StudentService {
         return "Student succesfully deleted!";
     }
 
+    /*@RequestMapping("/group")
+    @ResponseBody
     public String getAllGroupStudents(int id){
         ArrayList<Student> students = new ArrayList<>();
         try{

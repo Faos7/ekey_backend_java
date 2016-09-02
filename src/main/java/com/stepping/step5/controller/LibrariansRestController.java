@@ -1,15 +1,20 @@
-package com.stepping.step5.service;
-
+package com.stepping.step5.controller;
 
 import com.stepping.step5.entity.models.Librarian;
 import com.stepping.step5.entity.models.Library;
 import com.stepping.step5.entity.repository.LibrariansRepository;
 import com.stepping.step5.entity.repository.LibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class LibrarianService {
+@RestController
+@RequestMapping("/librarian")
+public class LibrariansRestController {
 
     @Autowired
     private LibraryRepository libraryRepository;
@@ -17,22 +22,9 @@ public class LibrarianService {
     @Autowired
     private LibrariansRepository librariansRepository;
 
-    /*public String getAllLibrarians(){
-        ArrayList<Librarian> collection = new ArrayList<>();
-        try{
-            collection.addAll(librariansRepository.findAll());
-        }catch (Exception ex){
-            return "can't get list with librarians: " + ex.toString();
-        }
-        String res = "";
-        if (collection.size()!= 0){
-            for (Librarian librarian : collection) {
-                res += librarian.toString();
-            }
-            return res;
-        }else return "There is no librarian!";
-    }
 
+    /*@RequestMapping(value = "/library", method = RequestMethod.GET)
+    @ResponseBody
     public String getAllLibraryLibrarians(int id){
         ArrayList<Librarian> librarians = new ArrayList<>();
         try{
@@ -48,19 +40,20 @@ public class LibrarianService {
             }
             return res;
         }else return "This library has no librarians!";
+    }*/
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Collection<Librarian>> getAllLibrarians(){
+        return new ResponseEntity<>((Collection<Librarian>) librariansRepository.findAll(), HttpStatus.OK);
     }
 
-    public String getLibrarianWithId(int id){
-        Librarian librarian;
-        try {
-            librarian = librariansRepository.findOne(id);
-        }catch (Exception ex){
-            return "Can't find librarian: " + ex.toString();
-        }
-        return librarian.toString();
-
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ResponseEntity<Librarian> getlibrarianWithId(@PathVariable int id){
+        return new ResponseEntity<>(librariansRepository.findOne(id), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
     public String createLibrarian(String name1, String name2, String name3, int id){
         try{
             Library library = libraryRepository.getOne(id);
@@ -77,6 +70,8 @@ public class LibrarianService {
         return "Librarian succesfully created!";
     }
 
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ResponseBody
     public String deleteLibrarian(int id){
         try{
             Librarian librarian = librariansRepository.findOne(id);
@@ -88,5 +83,5 @@ public class LibrarianService {
         {return "Error deleting the university: " + ex.toString();
         }
         return "Library succesfully deleted!";
-    }*/
+    }
 }

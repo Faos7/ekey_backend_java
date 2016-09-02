@@ -1,4 +1,4 @@
-package com.stepping.step5.service;
+package com.stepping.step5.controller;
 
 import com.stepping.step5.entity.models.Course;
 import com.stepping.step5.entity.models.Group;
@@ -7,10 +7,16 @@ import com.stepping.step5.entity.repository.CoursesRepository;
 import com.stepping.step5.entity.repository.GroupsRepository;
 import com.stepping.step5.entity.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class GroupService {
+@RestController
+@RequestMapping("/group")
+public class GroupRestController {
 
     @Autowired
     CoursesRepository coursesRepository;
@@ -21,33 +27,18 @@ public class GroupService {
     @Autowired
     GroupsRepository groupsRepository;
 
-    /*public String getAllGroups(){
-        ArrayList<Group> collection = new ArrayList<>();
-        try{
-            collection.addAll(groupsRepository.findAll());
-        }catch (Exception ex){
-            return "can't get list with groups: " + ex.toString();
-        }
-        String res = "";
-        if (collection.size()!= 0){
-            for (Group group : collection) {
-                res += group.toString();
-            }
-            return res;
-        }else return "There is no group!";
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Collection<Group>> getAllGroops(){
+        return new ResponseEntity<>((Collection<Group>) groupsRepository.findAll(), HttpStatus.OK);
     }
 
-    public String getGroupWithId(int id){
-        Group group;
-        try {
-            group = groupsRepository.findOne(id);
-        }catch (Exception ex){
-            return "Can't find group: " + ex.toString();
-        }
-        return group.toString();
-
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ResponseEntity<Group> getGroupWithId(@PathVariable int id){
+        return new ResponseEntity<>(groupsRepository.findOne(id), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
     public String createGroup(String name, int cId, int uId){
         try{
             University university = universityRepository.findOne(uId);
@@ -67,6 +58,8 @@ public class GroupService {
         return "Group succesfully created!";
     }
 
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ResponseBody
     public String deleteGroup(int id){
         try{
             Group group = groupsRepository.findOne(id);
@@ -84,6 +77,8 @@ public class GroupService {
         return "Group succesfully deleted!";
     }
 
+    /*@RequestMapping(value = "/university", method = RequestMethod.GET)
+    @ResponseBody
     public String getAllUniversityGroups(int id){
         ArrayList<Group> groups = new ArrayList<>();
         try{
@@ -100,8 +95,10 @@ public class GroupService {
             return res;
         }else
             return "This University has no groups!";
-    }
+    }*/
 
+    /*@RequestMapping(value = "/course", method = RequestMethod.GET)
+    @ResponseBody
     public String getAllCourseGroups(int id){
         ArrayList<Group> groups = new ArrayList<>();
         try{
@@ -117,7 +114,6 @@ public class GroupService {
             }
             return res;
         }else return "This course has no groups!";
-
     }*/
 
 }

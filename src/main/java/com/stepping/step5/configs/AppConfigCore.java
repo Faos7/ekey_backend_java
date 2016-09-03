@@ -1,10 +1,6 @@
 package com.stepping.step5.configs;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import java.util.Properties;
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,12 +13,24 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
+import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+import java.util.Properties;
+
+
+/**
+ * Configuration for spring boot core (data config)
+ *
+ * @author Faost
+ * @version 1.0
+ */
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"com.stepping.step5"})
-public class JpaConfig implements TransactionManagementConfigurer {
+public class AppConfigCore implements TransactionManagementConfigurer {
 
-    @Value("${spring.datasource.driver}")
+    @Value("${spring.datasource.driverClassName}")
     private String driver;
     @Value("${spring.datasource.url}")
     private String url;
@@ -34,7 +42,6 @@ public class JpaConfig implements TransactionManagementConfigurer {
     private String dialect;
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String hbm2ddlAuto;
-
 
     @Bean
     public DataSource configureDataSource() {

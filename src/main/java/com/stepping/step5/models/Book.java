@@ -1,19 +1,20 @@
-package com.stepping.step5.entity.models;
+package com.stepping.step5.models;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+import java.util.Date;
 
 @Entity
 @Table(name = "books")
 public class Book implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Id_book", nullable = false)
+    @SequenceGenerator(name="book_sequence",sequenceName="book_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="book_sequence")
+    @Column(name="id", unique=true, nullable=false)
     private Integer bookId;
 
     @Column(name = "Name_book")
@@ -25,29 +26,42 @@ public class Book implements Serializable{
     @Column(name = "Publ_year")
     private int publYear;
 
+    @Column(name = "number")
+    private int number;
+
     @ManyToOne
+    @JoinColumn(name = "Id_library")
     private Library library;
 
     @Column(name = "OnlyHere")
     private Boolean onlyHere;
 
+    @JsonIgnore
     @ManyToOne
-    private Student student;
+    @JoinColumn(name = "Id_owner")
+    private User user;
 
-
-    @Column(name = "DateFrom")
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    private DateTime dateFrom;
+    @Column(name = "DateTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateFrom;
 
     @Column(name = "dateTo")
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    private DateTime dateTo;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateTo;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public Boolean getOnlyHere() {
         return onlyHere;
     }
 
-    public DateTime getDateFrom() {
+    public Date getDateFrom() {
         return dateFrom;
     }
 
@@ -83,15 +97,15 @@ public class Book implements Serializable{
         this.bookName = bookName;
     }
 
-    public DateTime getDateTo() {
+    public Date getDateTo() {
         return dateTo;
     }
 
-    public Student getStudent() {
-        return student;
+    public User getUser() {
+        return user;
     }
 
-    public void setDateFrom(DateTime dateFrom) {
+    public void setDateFrom(Date dateFrom) {
         this.dateFrom = dateFrom;
     }
 
@@ -99,7 +113,7 @@ public class Book implements Serializable{
         this.publYear = publYear;
     }
 
-    public void setDateTo(DateTime dateTo) {
+    public void setDateTo(Date dateTo) {
         this.dateTo = dateTo;
     }
 
@@ -111,22 +125,11 @@ public class Book implements Serializable{
         this.onlyHere = onlyHere;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Book(){}
-
-    public Book(int id, String bookName, String authorName,
-                int publYear, Boolean onlyHere,
-                DateTime dateFrom, DateTime dateTo){
-        this.bookName = bookName;
-        this.authorName = authorName;
-        this.publYear = publYear;
-        this.onlyHere = onlyHere;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
-    }
 
     @Override
     public String toString() {
@@ -135,8 +138,9 @@ public class Book implements Serializable{
                 ", authorName=" + authorName +
                 ", publyshingYear=" + publYear +
                 ", library=" + library.getLibraryId()+
+                ", number=" + number +
                 ", onlyHere=" + onlyHere +
-                ", owner=" + student.getStudentId() +
+                ", owner=" + user.getId() +
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +'}';
     }

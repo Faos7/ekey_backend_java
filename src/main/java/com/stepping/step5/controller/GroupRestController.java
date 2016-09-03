@@ -1,17 +1,18 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.entity.models.Course;
-import com.stepping.step5.entity.models.Group;
-import com.stepping.step5.entity.models.University;
-import com.stepping.step5.entity.repository.CoursesRepository;
-import com.stepping.step5.entity.repository.GroupsRepository;
-import com.stepping.step5.entity.repository.UniversityRepository;
+import com.stepping.step5.models.Course;
+import com.stepping.step5.models.Faculty;
+import com.stepping.step5.models.Group;
+import com.stepping.step5.models.University;
+import com.stepping.step5.repository.CoursesRepository;
+import com.stepping.step5.repository.FacultyRepository;
+import com.stepping.step5.repository.GroupsRepository;
+import com.stepping.step5.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -22,7 +23,7 @@ public class GroupRestController {
     CoursesRepository coursesRepository;
 
     @Autowired
-    UniversityRepository universityRepository;
+    FacultyRepository facultyRepository;
 
     @Autowired
     GroupsRepository groupsRepository;
@@ -39,18 +40,18 @@ public class GroupRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public String createGroup(String name, int cId, int uId){
+    public String createGroup(String name, int cId, int fId){
         try{
-            University university = universityRepository.findOne(uId);
+            Faculty faculty = facultyRepository.findOne(fId);
             Course course = coursesRepository.findOne(cId);
             Group group = new Group();
-            group.setGroupName(name);
-            group.setUniversity(university);
+            group.setName(name);
+            group.setFaculty(faculty);
             group.setCourse(course);
-            university.addGroup(group);
+            faculty.addGroup(group);
             course.addGroup(group);
             coursesRepository.save(course);
-            universityRepository.save(university);
+            facultyRepository.save(faculty);
             groupsRepository.save(group);
         }catch (Exception ex){
             return "Error creating the group: " + ex.toString();
@@ -64,11 +65,11 @@ public class GroupRestController {
         try{
             Group group = groupsRepository.findOne(id);
             Course course = group.getCourse();
-            University university = group.getUniversity();
+            Faculty faculty = group.getFaculty();
             course.deleteGroup(group);
-            university.deleteGroup(group);
+            faculty.deleteGroup(group);
             coursesRepository.save(course);
-            universityRepository.save(university);
+            facultyRepository.save(faculty);
             groupsRepository.delete(group);
         }catch (Exception ex)
         {
@@ -77,43 +78,18 @@ public class GroupRestController {
         return "Group succesfully deleted!";
     }
 
-    /*@RequestMapping(value = "/university", method = RequestMethod.GET)
+    @RequestMapping(value = "/faculty/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String getAllUniversityGroups(int id){
-        ArrayList<Group> groups = new ArrayList<>();
-        try{
-            University university = universityRepository.findOne(id);
-            groups.addAll(university.getGroups());
-        }catch (Exception ex){
-            return "Can't get all university groups: " + ex.toString();
+        public ResponseEntity<Collection<Group>> getAllFacultyGroups(@PathVariable int id){
+            Faculty faculty = facultyRepository.findOne(id);
+            return new ResponseEntity<Collection<Group>>(faculty.getGroups(), HttpStatus.OK);
         }
-        String res = "";
-        if (groups.size()!=0){
-            for(Group group: groups){
-                res += group.toString();
-            }
-            return res;
-        }else
-            return "This University has no groups!";
-    }*/
 
-    /*@RequestMapping(value = "/course", method = RequestMethod.GET)
-    @ResponseBody
-    public String getAllCourseGroups(int id){
-        ArrayList<Group> groups = new ArrayList<>();
-        try{
+        @RequestMapping(value = "/course/{id}", method = RequestMethod.GET)
+        @ResponseBody
+        public ResponseEntity<Collection<Group>> getAllCourseGroups(@PathVariable int id){
             Course course = coursesRepository.findOne(id);
-            groups.addAll(course.getGroups());
-        }catch (Exception ex){
-            return "Can't get all course groups: " + ex.toString();
-        }
-        String res = "";
-        if (groups.size()!=0){
-            for(Group group: groups){
-                res += group.toString();
-            }
-            return res;
-        }else return "This course has no groups!";
-    }*/
+            return new ResponseEntity<Collection<Group>>(course.getGroups(), HttpStatus.OK);
+    }
 
 }

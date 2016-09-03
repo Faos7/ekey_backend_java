@@ -1,8 +1,8 @@
 package com.stepping.step5.controller;
 
 
-import com.stepping.step5.entity.models.Course;
-import com.stepping.step5.entity.repository.CoursesRepository;
+import com.stepping.step5.models.Course;
+import com.stepping.step5.repository.CoursesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

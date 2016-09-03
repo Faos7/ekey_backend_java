@@ -1,18 +1,16 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.entity.models.Book;
-import com.stepping.step5.entity.models.Library;
-import com.stepping.step5.entity.models.Student;
-import com.stepping.step5.entity.repository.BooksRepository;
-import com.stepping.step5.entity.repository.LibraryRepository;
-import com.stepping.step5.entity.repository.StudentRepository;
-import org.joda.time.DateTime;
+import com.stepping.step5.models.Book;
+import com.stepping.step5.models.Library;
+import com.stepping.step5.models.User;
+import com.stepping.step5.repository.BooksRepository;
+import com.stepping.step5.repository.LibraryRepository;
+import com.stepping.step5.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -23,7 +21,7 @@ public class BookRestController {
     BooksRepository booksRepository;
 
     @Autowired
-    StudentRepository studentRepository;
+    UserRepository userRepository;
 
     @Autowired
     LibraryRepository libraryRepository;
@@ -40,19 +38,19 @@ public class BookRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public String createBook(String name, String author, int year, int sId, int lId){
+    public String createBook(String name, String author, int year, Long sId, int lId){
         try{
-            Student student = studentRepository.findOne(sId);
+            User user = userRepository.findOne(sId);
             Library library = libraryRepository.findOne(lId);
             Book book = new Book();
             book.setAuthorName(author);
             book.setBookName(name);
-            book.setStudent(student);
+            book.setUser(user);
             book.setLibrary(library);
             book.setPublYear(year);
-            student.addBook(book);
+            user.addBook(book);
             library.addBook(book);
-            studentRepository.save(student);
+            userRepository.save(user);
             libraryRepository.save(library);
             booksRepository.save(book);
         }catch (Exception ex){
@@ -66,11 +64,11 @@ public class BookRestController {
     public String deleteBook(int id){
         try{
             Book book = booksRepository.findOne(id);
-            Student student = book.getStudent();
+            User user = book.getUser();
             Library library = book.getLibrary();
             library.deleteBook(book);
-            student.deleteBook(book);
-            studentRepository.save(student);
+            user.deleteBook(book);
+            userRepository.save(user);
             libraryRepository.save(library);
             booksRepository.delete(book);
         }catch (Exception ex)
@@ -80,42 +78,18 @@ public class BookRestController {
         return "Book succesfully deleted!";
     }
 
-    /*@RequestMapping(value = "/student", method = RequestMethod.GET)
+
+
+    @RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String getAllStudentBooks(int id){
-        ArrayList<Book> books = new ArrayList<>();
-        try{
-            Student student = studentRepository.findOne(id);
-            books.addAll(student.getBooks());
-        }catch (Exception ex){
-            return "Can't get all student books: " + ex.toString();
-        }
-        String res = "";
-        if (books.size()!=0){
-            for(Book book: books){
-                res += book.toString();
-            }
-            return res;
-        }else
-            return "This student has no books!";
+    public ResponseEntity<Collection<Book>> getAllStudentBooks(@PathVariable Long id){
+        return new ResponseEntity<Collection<Book>>(userRepository.findOne(id).getBooks(), HttpStatus.OK);
+
     }
-    @RequestMapping(value = "/library", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/library/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String getAllLibraryBooks(int id){
-        ArrayList<Book> books = new ArrayList<>();
-        try{
-            Library library = libraryRepository.findOne(id);
-            books.addAll(library.getBooks());
-        }catch (Exception ex){
-            return "Can't get all library books: " + ex.toString();
-        }
-        String res = "";
-        if (books.size()!=0){
-            for(Book book: books){
-                res += book.toString();
-            }
-            return res;
-        }else
-            return "This library has no books!";
-    }*/
+    public ResponseEntity<Collection<Book>>getAllLibraryBooks(@PathVariable int id){
+        return new ResponseEntity<Collection<Book>>(libraryRepository.findOne(id).getBooks(), HttpStatus.OK);
+    }
 }

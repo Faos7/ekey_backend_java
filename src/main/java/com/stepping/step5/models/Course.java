@@ -1,4 +1,4 @@
-package com.stepping.step5.entity.models;
+package com.stepping.step5.models;
 
 import java.io.Serializable;
 import java.util.List;

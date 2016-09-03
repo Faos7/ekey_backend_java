@@ -4,13 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Step5Application {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Step5Application.class, args);
-
-
-		//UniversityServiceImpl universityService = new UniversityServiceImpl();
-
+		SpringApplication.run(Application.class, args);
 	}
 }

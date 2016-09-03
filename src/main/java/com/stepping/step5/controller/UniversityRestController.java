@@ -1,7 +1,7 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.entity.models.University;
-import com.stepping.step5.entity.repository.UniversityRepository;
+import com.stepping.step5.models.University;
+import com.stepping.step5.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class UniversityRestController {
     public String createUniversity(String name){
         try{
             University university = new University();
-            university.setUniverName(name);
+            university.setName(name);
             universityRepository.save(university);
         }catch (Exception ex){
             return "Error creating the university: " + ex.toString();

@@ -1,4 +1,4 @@
-package com.stepping.step5.models;
+package com.stepping.step5.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,23 +14,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "courses")
 public class Course implements Serializable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "Id_course")
     private Integer courseId;
 
     @Column(name = "Course_numb")
-    private Integer courseNumb;
+    private Integer number;
 
     @OneToMany(mappedBy = "course")
     private List<Group> groups;
 
     public Course(){}
-
-    public Course(Integer courseNumb, List<Group> groups){
-        this.courseNumb = courseNumb;
-        this.groups = groups;
-    }
 
     public void addGroup(Group group){
         groups.add(group);
@@ -60,18 +56,18 @@ public class Course implements Serializable{
         this.courseId = courseId;
     }
 
-    public Integer getCourseNumb() {
-        return courseNumb;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setCourseNumb(Integer courseNumb) {
-        this.courseNumb = courseNumb;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     @Override
     public String toString() {
         return "Course{" + "courseId=" + courseId +
-                ", courseNumb=" + courseNumb +
+                ", courseNumb=" + number +
                 ", number of groups=" + getNumderOfGroups() +'}';
     }
 }

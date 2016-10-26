@@ -1,7 +1,6 @@
 package com.stepping.step5.service;
 
-import com.stepping.step5.models.CurrentUser;
-import com.stepping.step5.models.Role;
+import com.stepping.step5.entity.CurrentUser;
 import com.stepping.step5.repository.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

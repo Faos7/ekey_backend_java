@@ -1,8 +1,8 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.models.Book;
-import com.stepping.step5.models.Library;
-import com.stepping.step5.models.User;
+import com.stepping.step5.entity.Book;
+import com.stepping.step5.entity.Library;
+import com.stepping.step5.entity.User;
 import com.stepping.step5.repository.BooksRepository;
 import com.stepping.step5.repository.LibraryRepository;
 import com.stepping.step5.repository.UserRepository;

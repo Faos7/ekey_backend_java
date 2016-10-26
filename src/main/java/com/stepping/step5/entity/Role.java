@@ -1,4 +1,6 @@
-package com.stepping.step5.models;
+package com.stepping.step5.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -23,6 +25,7 @@ public class Role {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role")
     private Set<User> users;
 

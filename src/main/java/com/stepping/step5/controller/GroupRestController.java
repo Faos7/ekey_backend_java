@@ -1,13 +1,11 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.models.Course;
-import com.stepping.step5.models.Faculty;
-import com.stepping.step5.models.Group;
-import com.stepping.step5.models.University;
+import com.stepping.step5.entity.Course;
+import com.stepping.step5.entity.Faculty;
+import com.stepping.step5.entity.Group;
 import com.stepping.step5.repository.CoursesRepository;
 import com.stepping.step5.repository.FacultyRepository;
 import com.stepping.step5.repository.GroupsRepository;
-import com.stepping.step5.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

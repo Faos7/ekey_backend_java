@@ -1,6 +1,6 @@
 package com.stepping.step5.service;
 
-import com.stepping.step5.models.CurrentUser;
+import com.stepping.step5.entity.CurrentUser;
 
 /**
  * Created by re5 on 24.10.16.

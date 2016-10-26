@@ -1,9 +1,12 @@
 package com.stepping.step5.repository;
 
-import com.stepping.step5.models.Course;
+import com.stepping.step5.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+import java.util.Optional;
+
+
 public interface CoursesRepository extends JpaRepository<Course, Integer> {
+
+    Optional<Course> findOneByNumber(int number);
 }

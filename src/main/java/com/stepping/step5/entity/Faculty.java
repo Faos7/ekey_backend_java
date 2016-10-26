@@ -1,4 +1,4 @@
-package com.stepping.step5.models;
+package com.stepping.step5.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,7 +23,7 @@ public class Faculty implements Serializable{
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Id_univer")
-    private com.stepping.step5.models.University university;
+    private com.stepping.step5.entity.University university;
 
     @OneToMany(mappedBy = "faculty")
     private List<Group> groups;
@@ -50,11 +50,11 @@ public class Faculty implements Serializable{
         this.name = name;
     }
 
-    public com.stepping.step5.models.University getUniversity() {
+    public com.stepping.step5.entity.University getUniversity() {
         return university;
     }
 
-    public void setUniversity(com.stepping.step5.models.University university) {
+    public void setUniversity(com.stepping.step5.entity.University university) {
         this.university = university;
     }
 

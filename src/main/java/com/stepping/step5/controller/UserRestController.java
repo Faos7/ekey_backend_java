@@ -1,9 +1,9 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.models.Group;
-import com.stepping.step5.models.Library;
-import com.stepping.step5.models.Role;
-import com.stepping.step5.models.User;
+import com.stepping.step5.entity.Group;
+import com.stepping.step5.entity.Library;
+import com.stepping.step5.entity.Role;
+import com.stepping.step5.entity.User;
 import com.stepping.step5.repository.GroupsRepository;
 import com.stepping.step5.repository.LibraryRepository;
 import com.stepping.step5.repository.RoleRepository;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Created by re5 on 20.10.16.
@@ -43,10 +44,10 @@ public class UserRestController {
         return new ResponseEntity<>((Collection<User>) userRepository.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{role}")
+    /*@RequestMapping(method = RequestMethod.GET, value = "/{role}")
     public ResponseEntity<Collection<User>> getAllUsersWithRole(@PathVariable String role){
-        return new ResponseEntity<>((Collection<User>) userRepository.findManyByRole(roleRepository.findOneByName(role)), HttpStatus.OK);
-    }
+        return new ResponseEntity<>((Collection<Optional<User>>) userRepository.findManyByRole(roleRepository.findOneByName(role)), HttpStatus.OK);
+    }*/
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<User> getUserWithId(@PathVariable Long id){

@@ -1,6 +1,6 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.models.University;
+import com.stepping.step5.entity.University;
 import com.stepping.step5.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

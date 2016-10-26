@@ -1,4 +1,4 @@
-package com.stepping.step5.models;
+package com.stepping.step5.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package com.stepping.step5.models;
+package com.stepping.step5.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,6 +29,7 @@ public class Book implements Serializable{
     @Column(name = "number")
     private int number;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Id_library")
     private Library library;
@@ -144,4 +145,6 @@ public class Book implements Serializable{
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +'}';
     }
+
+
 }

@@ -1,7 +1,9 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.entity.University;
+import com.stepping.step5.models.University;
+import com.stepping.step5.models.out.UniversityOut;
 import com.stepping.step5.repository.UniversityRepository;
+import com.stepping.step5.service.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,12 @@ public class UniversityRestController {
     @Autowired
     private UniversityRepository universityRepository;
 
+    @Autowired
+    private UniversityService universityService;
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<University>> getAllUniversities(){
-        return new ResponseEntity<>((Collection<University>) universityRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<Collection<UniversityOut>> getAllUniversities(){
+        return new ResponseEntity<>((Collection<UniversityOut>) universityService.getAllUniversities(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")

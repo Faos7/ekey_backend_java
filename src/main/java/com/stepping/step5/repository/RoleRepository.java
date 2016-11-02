@@ -1,6 +1,6 @@
 package com.stepping.step5.repository;
 
-import com.stepping.step5.entity.Role;
+import com.stepping.step5.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

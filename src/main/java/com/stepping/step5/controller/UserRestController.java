@@ -1,24 +1,23 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.entity.Group;
-import com.stepping.step5.entity.Library;
-import com.stepping.step5.entity.Role;
-import com.stepping.step5.entity.User;
+import com.stepping.step5.models.Group;
+import com.stepping.step5.models.Library;
+import com.stepping.step5.models.Role;
+import com.stepping.step5.models.User;
+import com.stepping.step5.models.out.UserOut;
 import com.stepping.step5.repository.GroupsRepository;
 import com.stepping.step5.repository.LibraryRepository;
 import com.stepping.step5.repository.RoleRepository;
 import com.stepping.step5.repository.UserRepository;
+import com.stepping.step5.service.SecurityService;
+import com.stepping.step5.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Created by re5 on 20.10.16.
@@ -26,6 +25,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     LibraryRepository libraryRepository;
@@ -39,25 +41,39 @@ public class UserRestController {
     @Autowired
     GroupsRepository groupsRepository;
 
+    @Autowired
+    SecurityService securityService;
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<User>> getAllUsers(){
-        return new ResponseEntity<>((Collection<User>) userRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<Collection<UserOut>> getAllUsers(){
+        return new ResponseEntity<>((Collection<UserOut>) userService.getAllUsers(), HttpStatus.OK);
     }
 
-    /*@RequestMapping(method = RequestMethod.GET, value = "/{role}")
-    public ResponseEntity<Collection<User>> getAllUsersWithRole(@PathVariable String role){
-        return new ResponseEntity<>((Collection<Optional<User>>) userRepository.findManyByRole(roleRepository.findOneByName(role)), HttpStatus.OK);
-    }*/
+        @RequestMapping(method = RequestMethod.GET, value = "/role/{role}")
+        public ResponseEntity<Collection<UserOut>> getAllUsersWithRole(@PathVariable String role){
+            return new ResponseEntity<>((Collection<UserOut>) userService.getAllUsersWithSpecifiedRole(role), HttpStatus.OK);
+        }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ResponseEntity<User> getUserWithId(@PathVariable Long id){
-        return new ResponseEntity<>(userRepository.findOne(id), HttpStatus.OK);
+    public ResponseEntity<UserOut> getUserWithId(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/username/{username}")
+    public ResponseEntity<UserOut> getUserWithUsername(@PathVariable String username){
+        return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/lg")
+    public String userLogin(String username, String password){
+        securityService.autoLogin(username, password);
+        return "sucessfuly logged in!";
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public String createUser(String firstName, String secondName, String thirdName, int id,
-                                String username, String password, long phone, String role){
+                             String username, String password, long phone, String role){
         try{
             User user = new User();
             Role role1= roleRepository.findOneByName(role);
@@ -86,33 +102,32 @@ public class UserRestController {
         }
         return "User succesfully created!";
     }
-/*
-    @RequestMapping(method = RequestMethod.DELETE)
-    @ResponseBody
-    public String deleteStudent(int id){
-        try{
-            Student student =studentRepository.findOne(id);
-            Group group = student.getGroup();
-            group.deleteStudent(student);
-            groupsRepository.save(group);
-            studentRepository.delete(student);
-        }catch (Exception ex)
-        {
-            return "Error deleting the student: " + ex.toString();
+    /*
+        @RequestMapping(method = RequestMethod.DELETE)
+        @ResponseBody
+        public String deleteStudent(int id){
+            try{
+                Student student =studentRepository.findOne(id);
+                Group group = student.getGroup();
+                group.deleteStudent(student);
+                groupsRepository.save(group);
+                studentRepository.delete(student);
+            }catch (Exception ex)
+            {
+                return "Error deleting the student: " + ex.toString();
+            }
+            return "Student succesfully deleted!";
         }
-        return "Student succesfully deleted!";
-    }
-*/
+    */
     @RequestMapping(value = "/group/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Collection<User>> getAllGroupStudents(@PathVariable int id){
-        return new ResponseEntity<Collection<User>>(groupsRepository.findOne(id).getUsers(), HttpStatus.OK);
+    public ResponseEntity<Collection<UserOut>> getAllGroupStudents(@PathVariable int id){
+        return new ResponseEntity<Collection<UserOut>>(userService.getAllGroupStudents(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/library/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Collection<User>> getAllLibraryLibrarians(@PathVariable int id){
-        return new ResponseEntity<Collection<User>>(libraryRepository.findOne(id).getUsers(), HttpStatus.OK);
+    public ResponseEntity<Collection<UserOut>> getAllLibraryLibrarians(@PathVariable int id){
+        return new ResponseEntity<Collection<UserOut>>(userService.getAllLibrarians(id), HttpStatus.OK);
     }
 }
-

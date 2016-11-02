@@ -1,7 +1,7 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.entity.Library;
-import com.stepping.step5.entity.University;
+import com.stepping.step5.models.Library;
+import com.stepping.step5.models.University;
 import com.stepping.step5.repository.LibraryRepository;
 import com.stepping.step5.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;

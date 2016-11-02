@@ -1,8 +1,8 @@
 package com.stepping.step5.controller;
 
-import com.stepping.step5.entity.Course;
-import com.stepping.step5.entity.Faculty;
-import com.stepping.step5.entity.Group;
+import com.stepping.step5.models.Course;
+import com.stepping.step5.models.Faculty;
+import com.stepping.step5.models.Group;
 import com.stepping.step5.repository.CoursesRepository;
 import com.stepping.step5.repository.FacultyRepository;
 import com.stepping.step5.repository.GroupsRepository;

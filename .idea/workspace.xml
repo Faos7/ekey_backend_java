@@ -6,21 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2acbbc2c-a24c-4f8a-96e4-27f056a9effd" name="Default" comment="authentification">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/models/Transaction.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/repository/TransactionRepository.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/service/TransactionService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/service/impl/TransactionServiceImpl.java" />
+    <list default="true" id="2acbbc2c-a24c-4f8a-96e4-27f056a9effd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/BookRestController.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/BookRestController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/CourseRestController.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/CourseRestController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/FacultyRestController.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/FacultyRestController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/GroupRestController.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/GroupRestController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/UserRestController.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/UserRestController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/models/Book.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/models/Book.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/models/User.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/models/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/repository/BooksRepository.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/repository/BooksRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stepping/step5/repository/UserRepository.java" afterPath="$PROJECT_DIR$/src/main/java/com/stepping/step5/repository/UserRepository.java" />
     </list>
     <ignored path="step5.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -112,8 +99,8 @@
       <file leaf-file-name="BooksRepository.class" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/target/backend-with-spring-boot-security-0.0.1-SNAPSHOT/WEB-INF/classes/com/stepping/step5/repository/BooksRepository.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="288">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="e#0#701#0" expanded="true" />
               </folding>
@@ -172,7 +159,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="authentification" />
+        <entry key="$PROJECT_DIR$" value="transaction" />
       </map>
     </option>
     <option name="PUSH_TAGS">
@@ -1153,7 +1140,7 @@
       <workItem from="1478082499903" duration="5345000" />
       <workItem from="1478088430892" duration="11165000" />
       <workItem from="1478106909131" duration="102000" />
-      <workItem from="1478943425445" duration="13415000" />
+      <workItem from="1478943425445" duration="13541000" />
     </task>
     <task id="LOCAL-00001" summary="Api with Jon and bcryptor. allowed any changes">
       <created>1476976168902</created>
@@ -1176,11 +1163,18 @@
       <option name="project" value="LOCAL" />
       <updated>1477496344010</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added transaction">
+      <created>1478961889313</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1478961889313</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69815000" />
+    <option name="totallyTimeSpent" value="69941000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1442" height="901" extended-state="6" />
@@ -1264,7 +1258,8 @@
     <MESSAGE value="Added authentification" />
     <MESSAGE value="output json modified" />
     <MESSAGE value="authentification" />
-    <option name="LAST_COMMIT_MESSAGE" value="authentification" />
+    <MESSAGE value="added transaction" />
+    <option name="LAST_COMMIT_MESSAGE" value="added transaction" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1770,8 +1765,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/target/backend-with-spring-boot-security-0.0.1-SNAPSHOT/WEB-INF/classes/com/stepping/step5/repository/BooksRepository.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="288">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#0#701#0" expanded="true" />
           </folding>

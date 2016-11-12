@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+/** {@link Group} REST controller
+ *
+ * @author faos7
+ * @version 1.2
+ */
+
 @RestController
 @RequestMapping("/group")
 public class GroupRestController {
@@ -26,6 +32,10 @@ public class GroupRestController {
     @Autowired
     GroupsRepository groupsRepository;
 
+    /**
+     * Get all groups
+     * @return Json with all {@link Group}s
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Collection<Group>> getAllGroops(){
         return new ResponseEntity<>((Collection<Group>) groupsRepository.findAll(), HttpStatus.OK);

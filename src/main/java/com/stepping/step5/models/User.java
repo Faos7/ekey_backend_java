@@ -58,6 +58,30 @@ public class User implements Serializable{
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "student")
+    private List<Transaction> stTransactions;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "librarian")
+    private List<Transaction> lbTransactions;
+
+    public List<Transaction> getStTransactions() {
+        return stTransactions;
+    }
+
+    public void setStTransactions(List<Transaction> stTransactions) {
+        this.stTransactions = stTransactions;
+    }
+
+    public List<Transaction> getLbTransactions() {
+        return lbTransactions;
+    }
+
+    public void setLbTransactions(List<Transaction> lbTransactions) {
+        this.lbTransactions = lbTransactions;
+    }
+
     public Long getStudentCardId() {
         return studentCardId;
     }

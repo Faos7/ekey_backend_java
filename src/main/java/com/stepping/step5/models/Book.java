@@ -2,10 +2,10 @@ package com.stepping.step5.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -27,7 +27,7 @@ public class Book implements Serializable{
     private int publYear;
 
     @Column(name = "number")
-    private int number;
+    private String number;
 
     @JsonIgnore
     @ManyToOne
@@ -50,12 +50,35 @@ public class Book implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTo;
 
-    public int getNumber() {
+    @JsonIgnore
+    @OneToMany(mappedBy = "book")
+    private List<Transaction> transactions;
+
+    @JoinColumn(name = "free")
+    private boolean isFree;
+
+    public boolean isFree() {
+        return isFree;
+    }
+
+    public void setFree(boolean free) {
+        isFree = free;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setNumber(String number) {
+        this.number = library.getLibraryId() + number;
     }
 
     public Boolean getOnlyHere() {

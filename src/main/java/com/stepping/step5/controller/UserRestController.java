@@ -10,6 +10,7 @@ import com.stepping.step5.repository.LibraryRepository;
 import com.stepping.step5.repository.RoleRepository;
 import com.stepping.step5.repository.UserRepository;
 import com.stepping.step5.service.SecurityService;
+import com.stepping.step5.service.TransactionService;
 import com.stepping.step5.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,9 @@ public class UserRestController {
 
     @Autowired
     GroupsRepository groupsRepository;
+
+    @Autowired
+    TransactionService transactionService;
 
     @Autowired
     SecurityService securityService;
@@ -123,6 +127,12 @@ public class UserRestController {
     @ResponseBody
     public ResponseEntity<Collection<UserOut>> getAllGroupStudents(@PathVariable int id){
         return new ResponseEntity<Collection<UserOut>>(userService.getAllGroupStudents(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/book/{number}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Collection<UserOut>> getAllBookOwners(@PathVariable String number){
+        return new ResponseEntity<Collection<UserOut>>(transactionService.getAllBookOwners(number), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/library/{id}", method = RequestMethod.GET)

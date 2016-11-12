@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+/**
+ * {@link Course} REST controller
+ *
+ * @author faos7
+ * @version 1.1
+ */
 
 @RestController
 @RequestMapping("/course")
@@ -18,38 +24,23 @@ public class CourseRestController {
     @Autowired
     private CoursesRepository coursesRepository;
 
+    /**
+     * Get all courses
+     * @return Json with all {@link Course}
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Collection<Course>> getAllCourses(){
         return new ResponseEntity<>((Collection<Course>) coursesRepository.findAll(), HttpStatus.OK);
     }
 
+    /**
+     * Get course wih id
+     * @param id - {@link Course} id
+     * @return Json with {@link Course} which has id
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<Course> getCourseWithId(@PathVariable int id){
         return new ResponseEntity<>(coursesRepository.findOne(id), HttpStatus.OK);
     }
 
-
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
-    public String createCourse(int numb){
-        try{
-            Course course = new Course();
-            course.setCourseNumb(numb);
-            coursesRepository.save(course);
-        }catch (Exception ex){
-            return "Error creating the course: " + ex.toString();
-        }
-        return "Course succesfully created!";
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE)
-    @ResponseBody
-    public String deleteCourse(int id){
-        try{
-            coursesRepository.delete(coursesRepository.findOne(id));
-        }catch (Exception ex)
-        {return "Error deleting the course: " + ex.toString();
-        }
-        return "Course succesfully deleted!";
-    }
 }

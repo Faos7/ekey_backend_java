@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Transactional
 public interface BooksRepository extends JpaRepository<Book, Integer> {
-    Optional<Book> findOneByNumber(int Number);
+    Optional<Book> findOneByNumber(String Number);
 
     Collection<Optional<Book>> findManyByBookName(String bookName);
 

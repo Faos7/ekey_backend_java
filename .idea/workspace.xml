@@ -57,8 +57,8 @@
       <file leaf-file-name="GroupRestController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/GroupRestController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+            <state relative-caret-position="360">
+              <caret line="55" column="39" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -1137,7 +1137,7 @@
       <workItem from="1478088430892" duration="11165000" />
       <workItem from="1478106909131" duration="102000" />
       <workItem from="1478943425445" duration="14166000" />
-      <workItem from="1479099500443" duration="4000000" />
+      <workItem from="1479099500443" duration="4362000" />
     </task>
     <task id="LOCAL-00001" summary="Api with Jon and bcryptor. allowed any changes">
       <created>1476976168902</created>
@@ -1181,11 +1181,18 @@
       <option name="project" value="LOCAL" />
       <updated>1479103196604</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added documentation">
+      <created>1479103576661</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1479103576661</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74566000" />
+    <option name="totallyTimeSpent" value="74928000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1442" height="901" extended-state="6" />
@@ -1737,8 +1744,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/stepping/step5/controller/GroupRestController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+        <state relative-caret-position="360">
+          <caret line="55" column="39" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="39" />
           <folding />
         </state>
       </provider>

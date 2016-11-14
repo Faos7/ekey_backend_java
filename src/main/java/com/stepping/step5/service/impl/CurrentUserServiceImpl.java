@@ -21,10 +21,10 @@ public class CurrentUserServiceImpl implements CurrentUserService {
     private RoleRepository roleRepository;
 
     @Override
-    public boolean canAccessUser(CurrentUser currentUser, Integer userId) {
+    public boolean canAccessUser(CurrentUser currentUser, Long userId) {
         LOGGER.debug("Checking if user={} has access to user={}", currentUser, userId);
         return currentUser != null
-                && (currentUser.getRole() == roleRepository.findOneByName("ADMIN")|| currentUser.getId().equals(userId));
+                && (currentUser.getRole().equals(roleRepository.findOne(1).getName())|| currentUser.getId().equals(userId));
     }
 
 }

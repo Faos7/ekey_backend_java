@@ -1,5 +1,9 @@
 package com.stepping.step5.configs;
 
+import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeaderBindingFilter;
+import com.stepping.step5.authentification.RESTAuthenticationEntryPoint;
+import com.stepping.step5.authentification.RESTAuthenticationFailureHandler;
+import com.stepping.step5.authentification.RESTAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -10,27 +14,63 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private RESTAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private RESTAuthenticationFailureHandler authenticationFailureHandler;
+    @Autowired
+    private RESTAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll()
+        /*http.authorizeRequests()
+                .antMatchers("/", "/public/**").permitAll()
+                .antMatchers("/users/**").hasAuthority("ADMIN")
+                .anyRequest().fullyAuthenticated()                .and()
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error")
+                .usernameParameter("email")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("remember-me")
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .and()
+                .rememberMe();*/
+        http.authorizeRequests()
+                .antMatchers("/user/**", "/university/**", "/book/**", "/course/**", "/group/**", "/faculty/**","/library/**")
+                .authenticated()
+        .and().formLogin().usernameParameter("username").passwordParameter("password").permitAll();
+        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+        http.formLogin().successHandler(authenticationSuccessHandler);
+        http.formLogin().failureHandler(authenticationFailureHandler);
+        http.logout().logoutSuccessUrl("/");
+
+        // CSRF tokens handling
+        http.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
+
+        /*http.authorizeRequests().antMatchers("/").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
-                .formLogin()
+                .formLogin()*/
                 /*.loginPage("/login")
                 .failureUrl("/login?error")*/
-                .usernameParameter("username")
+                /*.usernameParameter("username")
                 .passwordParameter("password")
-                .permitAll();
+                .permitAll();*/
     }
 
     @Override
@@ -40,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("password").roles("USER");*/
         auth
                 .userDetailsService(userDetailsService)
-                /*.passwordEncoder(new BCryptPasswordEncoder())*/;
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 }
 

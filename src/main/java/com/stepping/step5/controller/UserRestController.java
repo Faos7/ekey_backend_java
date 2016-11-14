@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 /**
- * Created by re5 on 20.10.16.
+ * {@link User} REST controller
+ *
+ * @author faos7
+ * @version 1.2
  */
 @RestController
 @RequestMapping("/user")
@@ -48,21 +51,41 @@ public class UserRestController {
     @Autowired
     SecurityService securityService;
 
+    /**
+     * Get all {@link User}s
+     *
+     * @return Json with all {@link User}
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Collection<UserOut>> getAllUsers(){
         return new ResponseEntity<>((Collection<UserOut>) userService.getAllUsers(), HttpStatus.OK);
     }
 
-        @RequestMapping(method = RequestMethod.GET, value = "/role/{role}")
-        public ResponseEntity<Collection<UserOut>> getAllUsersWithRole(@PathVariable String role){
-            return new ResponseEntity<>((Collection<UserOut>) userService.getAllUsersWithSpecifiedRole(role), HttpStatus.OK);
-        }
+    /**
+     * Get all {@link User}s with {@param role}
+     * @param role - {@link User} role
+     * @return Json with all {@link User}s who's role is {@param role}
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/role/{role}")
+    public ResponseEntity<Collection<UserOut>> getAllUsersWithRole(@PathVariable String role){
+        return new ResponseEntity<>((Collection<UserOut>) userService.getAllUsersWithSpecifiedRole(role), HttpStatus.OK);
+    }
 
+    /**
+     * Get {@link User} with {@param id}
+     * @param id - {@link User} Id
+     * @return Json with {@link User} which has specified id
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<UserOut> getUserWithId(@PathVariable Long id){
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
+    /**
+     * Get {@link User} with {@param username}
+     * @param username - {@link User} username
+     * @return Json with {@link User} which has specified username
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/username/{username}")
     public ResponseEntity<UserOut> getUserWithUsername(@PathVariable String username){
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
@@ -74,6 +97,20 @@ public class UserRestController {
         return "sucessfuly logged in!";
     }
 
+    /**
+     * Create {@link User} and add him to database
+     * @param firstName - {@link User}s first name
+     * @param secondName - {@link User}s second name
+     * @param thirdName - {@link User}s third name
+     * @param id - if role is STUDENT this id is a {@link Group} id, student studies in
+     *           if role is LIBRARIAN this id is a {@link Library} id, librarian works in
+     * @param username - {@link User}s username
+     * @param password - {@link User} password
+     * @param phone - {@link User} phone number
+     * @param role - {@link User} role
+     * @return String. if string is equal to "Transaction success" then {@link User}
+     * is added to database. else - error
+     */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public String createUser(String firstName, String secondName, String thirdName, int id,
@@ -104,7 +141,7 @@ public class UserRestController {
         }catch (Exception ex){
             return "Error creating the user: " + ex.toString();
         }
-        return "User succesfully created!";
+        return "Transaction success";
     }
     /*
         @RequestMapping(method = RequestMethod.DELETE)
@@ -123,18 +160,34 @@ public class UserRestController {
             return "Student succesfully deleted!";
         }
     */
+
+    /**
+     * get all {@link User} students in group
+     * @param id - {@link User} students id
+     * @return Json with all {@link User} students in {@link Group}
+     */
     @RequestMapping(value = "/group/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Collection<UserOut>> getAllGroupStudents(@PathVariable int id){
         return new ResponseEntity<Collection<UserOut>>(userService.getAllGroupStudents(id), HttpStatus.OK);
     }
 
+    /**
+     * Get all {@link com.stepping.step5.models.Book} owners
+     * @param number {@link com.stepping.step5.models.Book} - inventory number
+     * @return Json with all {@link User} students who had owned the {@link com.stepping.step5.models.Book}
+     */
     @RequestMapping(value = "/book/{number}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Collection<UserOut>> getAllBookOwners(@PathVariable String number){
         return new ResponseEntity<Collection<UserOut>>(transactionService.getAllBookOwners(number), HttpStatus.OK);
     }
 
+    /**
+     * Get all {@link User} librarians in {@link Library}
+     * @param id - {@link Library} id
+     * @return Json with all {@link User} librarians who work in {@link Library} with id
+     */
     @RequestMapping(value = "/library/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Collection<UserOut>> getAllLibraryLibrarians(@PathVariable int id){

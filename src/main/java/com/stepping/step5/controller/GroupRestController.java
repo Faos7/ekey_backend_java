@@ -41,11 +41,24 @@ public class GroupRestController {
         return new ResponseEntity<>((Collection<Group>) groupsRepository.findAll(), HttpStatus.OK);
     }
 
+    /**
+     * get {@link Group} with {@param id}
+     * @param id - {@link Group}'s id
+     * @return Json with {@link Group} which has {@param id}
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<Group> getGroupWithId(@PathVariable int id){
         return new ResponseEntity<>(groupsRepository.findOne(id), HttpStatus.OK);
     }
 
+    /**
+     * Create {@link Group} and add it to database
+     * @param name - {@link Group} name
+     * @param cId - {@link Course} - id of {@link Course} to which {@link Group} is bounded
+     * @param fId - {@link Faculty} - id of {@link Faculty} to which {@link Faculty} is bounded
+     * @return String. if string is equal to "Transaction success" then {@link Group}
+     * is added to database. else - error
+     */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public String createGroup(String name, int cId, int fId){
@@ -64,9 +77,15 @@ public class GroupRestController {
         }catch (Exception ex){
             return "Error creating the group: " + ex.toString();
         }
-        return "Group succesfully created!";
+        return "Transaction success";
     }
 
+    /**
+     * Delete {@link Group} from database
+     * @param id - {@link Group} id
+     * @return String. if string is equal to "Transaction success" then {@link Group}
+     * is deleted from database. else - error
+     */
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteGroup(int id){
@@ -83,21 +102,31 @@ public class GroupRestController {
         {
             return "Error deleting the group: " + ex.toString();
         }
-        return "Group succesfully deleted!";
+        return "Transaction success";
     }
 
+    /**
+     * get all {@link Faculty} {@link Group}s
+     * @param id - {@link Faculty} id
+     * @return Json with all {@link Group} which are bounded to {@link Faculty}
+     */
     @RequestMapping(value = "/faculty/{id}", method = RequestMethod.GET)
     @ResponseBody
-        public ResponseEntity<Collection<Group>> getAllFacultyGroups(@PathVariable int id){
-            Faculty faculty = facultyRepository.findOne(id);
-            return new ResponseEntity<Collection<Group>>(faculty.getGroups(), HttpStatus.OK);
-        }
+    public ResponseEntity<Collection<Group>> getAllFacultyGroups(@PathVariable int id){
+        Faculty faculty = facultyRepository.findOne(id);
+        return new ResponseEntity<Collection<Group>>(faculty.getGroups(), HttpStatus.OK);
+    }
 
-        @RequestMapping(value = "/course/{id}", method = RequestMethod.GET)
-        @ResponseBody
-        public ResponseEntity<Collection<Group>> getAllCourseGroups(@PathVariable int id){
-            Course course = coursesRepository.findOne(id);
-            return new ResponseEntity<Collection<Group>>(course.getGroups(), HttpStatus.OK);
+    /**
+     * get all {@link Course} {@link Group}s
+     * @param id - {@link Course}
+     * @return Json with all {@link Group} which are bounded to {@link Course}
+     */
+    @RequestMapping(value = "/course/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Collection<Group>> getAllCourseGroups(@PathVariable int id){
+        Course course = coursesRepository.findOne(id);
+        return new ResponseEntity<Collection<Group>>(course.getGroups(), HttpStatus.OK);
     }
 
 }

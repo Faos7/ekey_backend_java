@@ -4,6 +4,7 @@ import com.stepping.step5.models.Group;
 import com.stepping.step5.models.Library;
 import com.stepping.step5.models.Role;
 import com.stepping.step5.models.User;
+import com.stepping.step5.models.create.UserCreateForm;
 import com.stepping.step5.models.out.UserOut;
 import com.stepping.step5.repository.GroupsRepository;
 import com.stepping.step5.repository.LibraryRepository;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,9 +51,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserOut getUserByUsername(String username) {
-        LOGGER.debug("Getting user={}", username);
-        return new UserOut(userRepository.findOneByUsername(username));
+    public UserOut getUserByPhone(Long phone) {
+        LOGGER.debug("Getting user by phone number={}", phone);
+
+        return new UserOut(userRepository.findOneByPoneNumb(phone).get());
+    }
+
+    @Override
+    public UserOut getUserByEmail(String email) {
+        LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
+        return new UserOut(userRepository.findOneByUsername(email));
     }
 
     @Override
@@ -99,5 +108,27 @@ public class UserServiceImpl implements UserService {
             result.add(new UserOut(user));
         }
         return result;
+    }
+
+    @Override
+    public User create(UserCreateForm form) {
+        User user = new User();
+        user.setUsername(form.getEmail());
+        user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
+        user.setRole(form.getRole());
+        if (user.getRole().equals(roleRepository.findOneByName("LIBRARIAN"))){
+            Library library = libraryRepository.findOne(form.getId());
+            user.setLibrary(library);
+            library.addLibrarian(user);
+            libraryRepository.save(library);
+        }
+        else if (user.getRole().equals(roleRepository.findOneByName("STUDENT"))){
+            Group group = groupsRepository.findOne(form.getId());
+            user.setGroup(group);
+            group.addStudent(user);
+            groupsRepository.save(group);
+        }
+        userRepository.save(user);
+        return userRepository.save(user);
     }
 }

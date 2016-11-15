@@ -4,6 +4,7 @@ import com.stepping.step5.models.Group;
 import com.stepping.step5.models.Library;
 import com.stepping.step5.models.Role;
 import com.stepping.step5.models.User;
+import com.stepping.step5.models.create.UserCreateForm;
 import com.stepping.step5.models.out.UserOut;
 import com.stepping.step5.repository.GroupsRepository;
 import com.stepping.step5.repository.LibraryRepository;
@@ -90,7 +91,7 @@ public class UserRestController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/username/{username}")
     public ResponseEntity<UserOut> getUserWithUsername(@PathVariable String username){
-        return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByEmail(username), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/lg")
@@ -118,6 +119,22 @@ public class UserRestController {
     public String createUser(String firstName, String secondName, String thirdName, int id,
                              String username, String password, long phone, String role){
         try{
+            UserCreateForm user = new UserCreateForm();
+            Role role1 = roleRepository.findOneByName(role);
+            user.setEmail(username);
+            user.setFirstName(firstName);
+            user.setSecondName(secondName);
+            user.setThirdName(thirdName);
+            user.setPassword(password);
+            user.setPhoneNumb(phone);
+            user.setRole(role1);
+            if (role1.equals(roleRepository.findOneByName("LIBRARIAN"))){
+                user.setId(id);
+            }
+            else if (role1.equals(roleRepository.findOneByName("STUDENT"))){
+                user.setId(id);
+            }
+            /*
             User user = new User();
             Role role1= roleRepository.findOneByName(role);
             user.setFirstName(firstName);
@@ -139,7 +156,7 @@ public class UserRestController {
                 group.addStudent(user);
                 groupsRepository.save(group);
             }
-            userRepository.save(user);
+            userRepository.save(user);*/
         }catch (Exception ex){
             return "Error creating the user: " + ex.toString();
         }

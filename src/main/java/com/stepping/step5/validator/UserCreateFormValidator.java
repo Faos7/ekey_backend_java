@@ -36,7 +36,7 @@ public class UserCreateFormValidator implements Validator {
     }
 
     private void validatePhone(Errors errors, UserCreateForm form){
-        if (userRepository.findOneByPoneNumb(form.getPhoneNumb()).isPresent()){
+        if (userRepository.findOneByPhoneNumb(form.getPhoneNumb()).isPresent()){
             errors.reject("phone.exists", "User with this phone already exists");
         }
     }

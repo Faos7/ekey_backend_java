@@ -1,5 +1,6 @@
 package com.stepping.step5.service.impl;
 
+import com.stepping.step5.configs.MailConfig;
 import com.stepping.step5.models.Group;
 import com.stepping.step5.models.Library;
 import com.stepping.step5.models.Role;
@@ -15,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +33,13 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    MailConfig ctx = new MailConfig();
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final GroupsRepository groupsRepository;
     private final LibraryRepository libraryRepository;
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
@@ -54,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public UserOut getUserByPhone(Long phone) {
         LOGGER.debug("Getting user by phone number={}", phone);
 
-        return new UserOut(userRepository.findOneByPoneNumb(phone).get());
+        return new UserOut(userRepository.findOneByPhoneNumb(phone).get());
     }
 
     @Override
@@ -112,8 +119,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(UserCreateForm form) {
+
+
         User user = new User();
         user.setUsername(form.getEmail());
+
         user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
         user.setRole(form.getRole());
         if (user.getRole().equals(roleRepository.findOneByName("LIBRARIAN"))){
@@ -128,7 +138,16 @@ public class UserServiceImpl implements UserService {
             group.addStudent(user);
             groupsRepository.save(group);
         }
-        userRepository.save(user);
+        try {
+            JavaMailSender mailSender = ctx.javaMailSender();
+            SimpleMailMessage templateMessage = new SimpleMailMessage(ctx.templateMassege());
+            templateMessage.setTo(user.getUsername());
+            templateMessage.setText("Your new password on E-Key is " + "demo146");
+            user.setPassword(new BCryptPasswordEncoder().encode("demo146"));
+            userRepository.save(user);
+        }catch (MailException ex){
+            LOGGER.debug("FAILED to send message", ex.getStackTrace());
+        }
         return userRepository.save(user);
     }
 }

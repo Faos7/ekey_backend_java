@@ -108,7 +108,7 @@ public class UserRestController {
      * @param id - if role is STUDENT this id is a {@link Group} id, student studies in
      *           if role is LIBRARIAN this id is a {@link Library} id, librarian works in
      * @param username - {@link User}s username
-     * @param password - {@link User} password
+     //* @param password - {@link User} password
      * @param phone - {@link User} phone number
      * @param role - {@link User} role
      * @return String. if string is equal to "Transaction success" then {@link User}
@@ -117,7 +117,7 @@ public class UserRestController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public String createUser(String firstName, String secondName, String thirdName, int id,
-                             String username, String password, long phone, String role){
+                             String username /*, String password*/, long phone, String role){
         try{
             UserCreateForm user = new UserCreateForm();
             Role role1 = roleRepository.findOneByName(role);
@@ -125,7 +125,7 @@ public class UserRestController {
             user.setFirstName(firstName);
             user.setSecondName(secondName);
             user.setThirdName(thirdName);
-            user.setPassword(password);
+            /*user.setPassword(password);*/
             user.setPhoneNumb(phone);
             user.setRole(role1);
             if (role1.equals(roleRepository.findOneByName("LIBRARIAN"))){
@@ -134,6 +134,7 @@ public class UserRestController {
             else if (role1.equals(roleRepository.findOneByName("STUDENT"))){
                 user.setId(id);
             }
+            userService.create(user);
             /*
             User user = new User();
             Role role1= roleRepository.findOneByName(role);
@@ -155,8 +156,8 @@ public class UserRestController {
                 user.setGroup(group);
                 group.addStudent(user);
                 groupsRepository.save(group);
-            }
-            userRepository.save(user);*/
+            }*/
+            //userRepository.save(user);
         }catch (Exception ex){
             return "Error creating the user: " + ex.toString();
         }

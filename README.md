@@ -7,18 +7,25 @@ $ mvn spring-boot:start
 ```
 ## Technologies list
 Java8
+
 Spring boot
+
 Spring security
+
 PostgresQL
+
 HickariCP
+
 Hibernate
+
 Java mail
 
 ## About
 
 This is backend for Ekey project which won in student hackaton provided by Noosphere Engeneering school;
 
-The project is electronic simulation of students library ticket. This project was invited to decrease paper documentation and create a single base of books for all Universities who would use this product so that student from any university would be able to come to any other university and using his(her) studentID take/read/return book. 
+The project is electronic simulation of students library ticket. This project was invited to decrease paper documentation and create a single base of books for all Universities, which would use this product.
+Therefor student from any university would be able to come to any other university, and, using his(her) studentID, take/read/return book. 
 
 DB simulates students and librarians in university
 

@@ -36,7 +36,7 @@ API can send password into Email.
 ## Info
 server starts at http://127.0.0.1:9000
 
-Controller
+#### Controller example
 
 University controller is at http://127.0.0.1:9000/university
 

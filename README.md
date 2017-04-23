@@ -48,4 +48,4 @@ Creating university through POST, deleting through DELETE mapping;
 
 All other REST API in this project works the same way
 
-##Have fun with this stuff!
+### Have fun with this stuff!
